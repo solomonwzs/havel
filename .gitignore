@@ -1,0 +1,8 @@
+*.swp
+*.dump
+.rebar
+apps
+deps
+ebin
+tags
+dev/var

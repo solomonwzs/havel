@@ -1,0 +1,15 @@
+%% -*- erlang -*-
+
+{application, havel,
+ [{description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [kernel,
+                  stdlib,
+                  cowboy
+                 ]},
+  {mod, { havel_app, []}},
+  {env, []}
+ ]}.
+
+%% vim: set filetype=erlang:
