@@ -9,7 +9,9 @@
 %% Application callbacks
 %% ===================================================================
 
--define(DISPATCH, [{'_', [{"/", havel_web_handler_index, []}]}
+-define(DISPATCH, [{'_', [{"/", havel_web_handler_index, []},
+                          {"/priv/[...]", cowboy_static, {priv_dir, havel, ""}}
+                         ]}
     ]).
 
 start(_StartType, _StartArgs) ->
