@@ -6,3 +6,4 @@ deps
 ebin
 tags
 dev/var
+dev/ssl

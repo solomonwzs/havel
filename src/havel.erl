@@ -1,6 +1,6 @@
 -module(havel).
 
--export([start/0, stop/0]).
+-export([start/0, stop/0, restart/0]).
 
 start() ->
     lager:start(),
@@ -12,3 +12,7 @@ start() ->
 
 stop() ->
     application:stop(havel).
+
+restart() ->
+    stop(),
+    start().

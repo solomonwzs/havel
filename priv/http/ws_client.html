@@ -2,14 +2,14 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Websocket client</title>
-    <script src="/static/jquery.min.js"></script>
+    <script src="/h/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript">
       
       var websocket;
       $(document).ready(init);
       
       function init() {
-          $('#server').val("ws://" + window.location.host + "/websocket");
+          $('#server').val("wss://" + window.location.host + "/ws");
           if(!("WebSocket" in window)){  
               $('#status').append('<p><span style="color: red;">websockets are not supported </span></p>');
               $("#navigation").hide();  

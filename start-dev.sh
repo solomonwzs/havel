@@ -9,7 +9,7 @@ if [[ ! -d "$SPOOL_DIR" ]]; then
     mkdir -p "$SPOOL_DIR"
 fi
 
-BEAM_PATH="-pa ./ebin ./deps/*/ebin"
+BEAM_PATH="-pa $(pwd)/ebin $(pwd)/deps/*/ebin"
 MNESIA_OPTS="-mnesia dir \"\\\"$SPOOL_DIR\\\"\""
 ERLANG_OPTS="+K true -smp auto +P 250000"
 

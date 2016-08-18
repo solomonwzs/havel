@@ -3,7 +3,7 @@
 {application, havel,
  [{description, ""},
   {vsn, "1"},
-  {registered, []},
+  {registered, [havel_sup]},
   {applications, [kernel,
                   stdlib,
                   cowboy

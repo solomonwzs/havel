@@ -1,4 +1,4 @@
--module(havel_web_handler_index).
+-module(havel_http_handler_index).
 -behaviour(cowboy_http_handler).
 
 -export([init/3]).
@@ -7,7 +7,7 @@
 
 -include("havel_logger.hrl").
 
-init({tcp, http}, Req, Opts) ->
+init({Type, http}, Req, Opts) when Type =:= tcp orelse Type =:=ssl ->
     {ok, Req, Opts}.
 
 handle(Req, State) ->
