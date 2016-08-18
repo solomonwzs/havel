@@ -11,13 +11,15 @@
 -export([websocket_terminate/3]).
 
 -record(state, {
+          auth_ok = false :: boolean(),
           shutdown_tref :: undefined | timer:tref()
          }).
 
 init(_Type, Req, _Opt) ->
-    {ok, Tref} = timer:send_after(5 * 1000, {sys, shutdown}),
+    {ok, Tref} = timer:send_after(60 * 1000, {sys, no_auth_shutdown}),
     {upgrade, protocol, cowboy_websocket, Req,
      #state{
+        auth_ok = false,
         shutdown_tref = Tref
        }}.
 
@@ -29,7 +31,8 @@ websocket_handle(Data, Req, State) ->
     ?INFO_MSG("~p", [Data]),
     {ok, Req, State}.
 
-websocket_info({sys, shutdown}, Req, State) ->
+websocket_info({sys, no_auth_shutdown}, Req,
+               State = #state{auth_ok = false}) ->
     {shutdown, Req, State};
 websocket_info(Info, Req, State) ->
     ?INFO_MSG("~p", [Info]),
