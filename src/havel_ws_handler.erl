@@ -10,18 +10,27 @@
 -export([websocket_handle/3]).
 -export([websocket_terminate/3]).
 
-init(Type, Req, Opt) ->
-    ?INFO_MSG("~p", [Type]),
-    {upgrade, protocol, cowboy_websocket, Req, Opt}.
+-record(state, {
+          shutdown_tref :: undefined | timer:tref()
+         }).
 
-websocket_init(Type, Req, State) ->
-    ?INFO_MSG("~p", [Type]),
+init(_Type, Req, _Opt) ->
+    {ok, Tref} = timer:send_after(5 * 1000, {sys, shutdown}),
+    {upgrade, protocol, cowboy_websocket, Req,
+     #state{
+        shutdown_tref = Tref
+       }}.
+
+websocket_init(_Type, Req, State) ->
+    ?INFO_MSG("~p", [State]),
     {ok, Req, State}.
 
 websocket_handle(Data, Req, State) ->
     ?INFO_MSG("~p", [Data]),
     {ok, Req, State}.
 
+websocket_info({sys, shutdown}, Req, State) ->
+    {shutdown, Req, State};
 websocket_info(Info, Req, State) ->
     ?INFO_MSG("~p", [Info]),
     {ok, Req, State}.
