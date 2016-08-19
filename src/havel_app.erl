@@ -10,6 +10,7 @@
 %% ===================================================================
 
 -define(DISPATCH, [{'_', [{"/", havel_http_handler_index, []},
+                          {"/auth/[...]", havel_http_handler_auth, []},
                           {"/ws", havel_ws_handler, []},
                           {"/h/[...]", cowboy_static, {priv_dir, havel, "http"}}
                          ]}
@@ -22,6 +23,8 @@ start(_StartType, _StartArgs) ->
     havel_sup:start_link().
 
 stop(_State) ->
+    cowboy:stop_listener(havel_http_listener),
+    cowboy:stop_listener(havel_https_listener),
     ok.
 
 start_http(Dispatch) ->

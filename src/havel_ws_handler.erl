@@ -19,7 +19,7 @@ init(_Type, Req, _Opt) ->
     {ok, Tref} = timer:send_after(60 * 1000, {sys, no_auth_shutdown}),
     {upgrade, protocol, cowboy_websocket, Req,
      #state{
-        auth_ok = false,
+        auth_ok = true,
         shutdown_tref = Tref
        }}.
 
