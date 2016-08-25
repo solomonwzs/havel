@@ -30,7 +30,8 @@ stop(_State) ->
 start_http(Dispatch) ->
     {ok, HttpOpts} = application:get_env(havel, http_opts),
     Port = proplists:get_value(port, HttpOpts, 80),
-    cowboy:start_http(havel_http_listener, 100,
+    NAcceptors = proplists:get_value(n_acceptors, HttpOpts, 10),
+    cowboy:start_http(havel_http_listener, NAcceptors,
                       [{port, Port}],
                       [{env, [{dispatch, Dispatch}]}]).
 
@@ -39,6 +40,7 @@ start_https(Dispatch) ->
     Port = proplists:get_value(port, HttpsOpts, 443),
     KeyFile = proplists:get_value(keyfile, HttpsOpts),
     CertFile = proplists:get_value(certfile, HttpsOpts),
-    cowboy:start_https(havel_https_listener, 100,
+    NAcceptors = proplists:get_value(n_acceptors, HttpsOpts, 10),
+    cowboy:start_https(havel_https_listener, NAcceptors,
                        [{port, Port}, {keyfile, KeyFile}, {certfile, CertFile}],
                        [{env, [{dispatch, Dispatch}]}]).

@@ -27,15 +27,19 @@ websocket_init(_Type, Req, State) ->
     ?INFO_MSG("~p", [State]),
     {ok, Req, State}.
 
+websocket_handle({text, BNum}, Req, State) ->
+    Num = list_to_integer(binary_to_list(BNum)),
+    ?INFO_MSG("~p", [Num]),
+    {ok, Req, State};
 websocket_handle(Data, Req, State) ->
-    ?INFO_MSG("~p", [Data]),
+    ?INFO_MSG("handle: ~p", [Data]),
     {ok, Req, State}.
 
 websocket_info({sys, no_auth_shutdown}, Req,
                State = #state{auth_ok = false}) ->
     {shutdown, Req, State};
 websocket_info(Info, Req, State) ->
-    ?INFO_MSG("~p", [Info]),
+    ?INFO_MSG("info: ~p", [Info]),
     {ok, Req, State}.
 
 websocket_terminate(Reason, _Req, _State) ->
